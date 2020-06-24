@@ -2,18 +2,7 @@
 
 .gitignore
 config.js
-public/favicon.ico
-public/index.html
-public/logo192.png
-public/logo512.png
-public/manifest.json
-public/robots.txt
-src/App.css
-src/App.test.js
-src/index.css
-src/logo.svg
-src/serviceWorker.js
-src/setupTests.js
+
 
 
 # dependencies
