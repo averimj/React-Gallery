@@ -24,15 +24,24 @@ class App extends Component{
   }
 
   componentDidMount() {
-    axios.get('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=1df2f028fffc01a25570343da2f4ec96&tags=cats&per_page=24&format=json&nojsoncallback=1')
-      .then(response => {
-        this.setState({
-          photos: response.data.photos
-        })
+    /*end point*/
+      /*'https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg'*/
+
+      /* one of these needs a &q for query for searching
+      `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=cats&per_page=24&format=json&nojsoncallback=1`
+      or something similar that includes a SEARCH, PER PAGE and APIKEY `https://www.flickr.com/search/?q=${query}`*/
+  }
+
+  performSearch = (query) => {
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=1df2f028fffc01a25570343da2f4ec96&tags=cats&per_page=24&format=json&nojsoncallback=1`)
+    .then(response => {
+      this.setState({
+        photos: response.data.photos
       })
-      .catch(error => {
-        console.log('Houston, we have a problem!', error)
-      });
+    })
+    .catch(error => {
+      console.log('Houston, we have a problem!', error)
+    });
   }
 
  render() {
@@ -40,14 +49,15 @@ class App extends Component{
    return(
      <BrowserRouter>
       <div className="container">
-        <SearchForm />
+        <SearchForm onSearch={this.performSearch} />
         <Nav />
+        <PhotoList data={this.state.photos} />
         <Switch>
-            <Route exact path="/" render={ () => <PhotoList/> } />
-            <Route path="/cats" render={ () => <PhotoList/> } />
-            <Route path="/dogs" render={ () => <PhotoList/> } />
-            <Route path="/computers" render={ () => <PhotoList/> } />
-            <Route render={ () => <NotFound/> } />
+            <Route exact path="/" render={ () => <PhotoList /> } />
+            <Route path="/cats" render={ () => <PhotoList /> } />
+            <Route path="/dogs" render={ () => <PhotoList /> } />
+            <Route path="/computers" render={ () => <PhotoList /> } />
+            <Route render={ () => <NotFound /> } />
         </Switch>
       </div>
      </BrowserRouter>
