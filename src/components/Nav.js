@@ -1,14 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Nav = () => (
-  <nav class="main-nav">
+  <nav className='main-nav'>
     <ul>
-      <li><Link to='#'>Cats</Link></li>
-      <li><Link to='#'>Dogs</Link></li>
-      <li><Link to='#'>Computers</Link></li>
-      </ul>
+      <li><NavLink exact to='/'>PhotoList</NavLink></li>
+      <li><NavLink to='/cats'>Cats</NavLink></li>
+      <li><NavLink to='/dogs'>Dogs</NavLink></li>
+      <li><NavLink to='/computers'>Computers</NavLink></li>
+    </ul>
   </nav>
-)
-
+);
 export default Nav;
