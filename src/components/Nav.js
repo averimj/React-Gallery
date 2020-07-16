@@ -5,7 +5,7 @@ const Nav = () => (
   <div className='nav-container'>
     <nav className="main-nav">
       <ul>
-        <li><NavLink exact to='/'>Photo</NavLink></li>
+        <li><NavLink to='/food'>Food</NavLink></li>
         <li><NavLink to='/cats'>Cats</NavLink></li>
         <li><NavLink to='/dogs'>Dogs</NavLink></li>
         <li><NavLink to='/computers'>Computers</NavLink></li>
