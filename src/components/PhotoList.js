@@ -2,9 +2,10 @@ import React from 'react';
 import Photo from './Photo';
 import NotFound from './NotFound';
 
-const PhotoList = props => {
-
+const PhotoList = (props) => {
+  console.log(props);
   const results = props.data;
+  console.log(results);
   let photos;
   if (results.length > 0) {
     photos = results.map(photo =>
