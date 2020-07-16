@@ -49,31 +49,43 @@ export default class App extends Component {
         <div className='container'>
           <SearchForm onSearch={this.performSearch}/>
           <Nav />
+
           <Switch>
             <Route exact path='/' render={ () =>
               (this.state.loading)
               ? <h2>Loading</h2>
               : <PhotoList data={this.state.pics} /> }/>
 
+
+            <Route path='/search/:query' render={ () =>
+              (this.state.loading)
+              ? <h2>Loading</h2>
+              : <PhotoList data={this.state.pics} /> }/>
+
+
             <Route path='/food' render={ () =>
               (this.state.loading)
               ? <h2>Loading</h2>
               : <PhotoList data={this.state.pics} /> }/>
+
 
             <Route path='/cats' render={ () =>
               (this.state.loading)
               ? <h2>Loading</h2>
               : <PhotoList data={this.state.pics}/> }/>
 
+
             <Route path='/dogs' render={ () =>
               (this.state.loading)
               ? <h2>Loading</h2>
               : <PhotoList data={this.state.pics}/> }/>
 
+
             <Route path='/computers' render= { () =>
               (this.state.loading)
               ? <h2>Loading</h2>
               : <PhotoList data={this.state.pics}/> }/>
+
 
             <Route render={ () => <NotFound /> }/>
           </Switch>
