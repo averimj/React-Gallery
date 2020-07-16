@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
+import axios from 'axios';
 
 // App Components
 import PhotoList from './components/PhotoList';
@@ -24,17 +25,19 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=food&per_page=24&format=json&nojsoncallback=1`)
-      .then( response => response.json() )
-      .then(responseData => {
-        this.setState( { food: responseData.photos.photo });
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=food&per_page=24&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({
+          food: response.data.photos.photo
+        });
       })
       .catch(error => {
-        console.log('Houston, we have a problem fetching data', error);
-      })
-
+        console.log('Houston, we have a problem fetching and parsing data', error);
+      });
   }
+
   render() {
+    console.log(this.state.food);
     return(
       <BrowserRouter>
         <div className='container'>
