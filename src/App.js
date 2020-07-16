@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {
   BrowserRouter,
   Route,
-  Switch,
-  Redirect
+  Switch
 } from 'react-router-dom';
 import axios from 'axios';
 
@@ -20,18 +19,21 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      food: []
+      pics: [],
+      loading: true
     };
   }
 
   componentDidMount() {
+    this.performSearch();
   }
 
-  performSearch = (query) => {
+  performSearch = (query = 'african american women') => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
-          food: response.data.photos.photo
+          pics: response.data.photos.photo,
+          loading: false
         });
       })
       .catch(error => {
@@ -41,18 +43,38 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state.food);
+    console.log(this.state.pics);
     return(
       <BrowserRouter>
         <div className='container'>
           <SearchForm onSearch={this.performSearch}/>
           <Nav />
           <Switch>
-            <Route exact path='/' render={ () => <Redirect to='/food' /> }/>
-            <Route path='/food' render={ () => <PhotoList data={this.state.food}/> }/>
-            <Route path='/cats' render={ () => <PhotoList /> }/>
-            <Route path='/dogs' render={ () => <PhotoList /> }/>
-            <Route path='/computers' render= { () => <PhotoList /> }/>
+            <Route exact path='/' render={ () =>
+              (this.state.loading)
+              ? <h2>Loading</h2>
+              : <PhotoList data={this.state.pics} /> }/>
+
+            <Route path='/food' render={ () =>
+              (this.state.loading)
+              ? <h2>Loading</h2>
+              : <PhotoList data={this.state.pics} /> }/>
+
+            <Route path='/cats' render={ () =>
+              (this.state.loading)
+              ? <h2>Loading</h2>
+              : <PhotoList data={this.state.pics}/> }/>
+
+            <Route path='/dogs' render={ () =>
+              (this.state.loading)
+              ? <h2>Loading</h2>
+              : <PhotoList data={this.state.pics}/> }/>
+
+            <Route path='/computers' render= { () =>
+              (this.state.loading)
+              ? <h2>Loading</h2>
+              : <PhotoList data={this.state.pics}/> }/>
+
             <Route render={ () => <NotFound /> }/>
           </Switch>
         </div>
