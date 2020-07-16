@@ -25,7 +25,10 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=food&per_page=24&format=json&nojsoncallback=1`)
+  }
+
+  performSearch = (query) => {
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
           food: response.data.photos.photo
@@ -33,7 +36,8 @@ export default class App extends Component {
       })
       .catch(error => {
         console.log('Houston, we have a problem fetching and parsing data', error);
-      });
+      }
+    );
   }
 
   render() {
@@ -41,7 +45,7 @@ export default class App extends Component {
     return(
       <BrowserRouter>
         <div className='container'>
-          <SearchForm />
+          <SearchForm onSearch={this.performSearch}/>
           <Nav />
           <Switch>
             <Route exact path='/' render={ () => <Redirect to='/food' /> }/>
