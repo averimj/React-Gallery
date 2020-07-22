@@ -19,6 +19,7 @@ export default class App extends Component {
     super();
     this.state = {
       picResponse: [],
+      searchResponse: [],
       fruitResponse: [],
       snowResponse: [],
       planeResponse: [],
@@ -34,6 +35,8 @@ export default class App extends Component {
   performSearch = (query = 'african_american_women') => {
     let pics = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
 
+    let search = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
+
     let fruit = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=fruit&per_page=24&format=json&nojsoncallback=1`;
 
     let snow = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=snow&per_page=24&format=json&nojsoncallback=1`;
@@ -43,19 +46,21 @@ export default class App extends Component {
     let dolphins= `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=dolphines&per_page=24&format=json&nojsoncallback=1`;
 
     const picRequest = axios.get(pics);
+    const searchRequest = axios.get(search);
     const fruitRequest = axios.get(fruit);
     const snowRequest = axios.get(snow);
     const planesRequest = axios.get(planes);
     const dolphinsRequest = axios.get(dolphins);
 
-    axios.all([picRequest, fruitRequest, snowRequest, planesRequest, dolphinsRequest])
+    axios.all([picRequest, searchRequest, fruitRequest, snowRequest, planesRequest, dolphinsRequest])
     .then(axios.spread((...responses) => {
       this.setState({
         picResponse: responses[0].data.photos.photo,
-        fruitResponse: responses[1].data.photos.photo,
-        snowResponse: responses[2].data.photos.photo,
-        planeResponse: responses[3].data.photos.photo,
-        dolphinResponse: responses[4].data.photos.photo,
+        searchResponse: responses[1].data.photos.photo,
+        fruitResponse: responses[2].data.photos.photo,
+        snowResponse: responses[3].data.photos.photo,
+        planeResponse: responses[4].data.photos.photo,
+        dolphinResponse: responses[5].data.photos.photo,
         loading: false
       })
     }))
@@ -66,11 +71,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state.picResponse);
-    console.log(this.state.fruitResponse);
-    console.log(this.state.snowResponse);
-    console.log(this.state.planeResponse);
-    console.log(this.state.dolphinResponse);
     return(
       <BrowserRouter>
         <div className='container'>
@@ -88,7 +88,7 @@ export default class App extends Component {
             <Route path='/search/:query' render={ () =>
               (this.state.loading)
               ? <h2>Loading</h2>
-              : <PhotoList data={this.state.picResponse} />
+              : <PhotoList data={this.state.searchResponse} />
             }/>
 
 
